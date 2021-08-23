@@ -1,57 +1,65 @@
 import fisica.*; //importo la libreria de fisica 
-//import TUIO.*; //Declaramos un objeto de tipo TuioProcessing
-//TuioProcessing tuioClient;
+import TUIO.*; //Declaramos un objeto de tipo TuioProcessing
+TuioProcessing tuioClient;
 
 
 PImage fondo;
-FWorld mundo;//objeto mundo de fisica
+FWorld mundo;
 
 personaje p;
 base Base;
-Arco a;                 //clases
+Arco a;                
 Enemigo enemigo;
 BolaDeFuego bola; 
+Limite limiteCabeza;
+Tuio tuio;
 
+int vidasP = 5;
+int vidaC1=4, vidaC2=4, vidaC3=4;
+int tiempoDisparar = 5000;
+int tiempoOcurridoDisparar;
 
-
-
-int vidasP = 3;
-int vidaC1=2, vidaC2=2, vidaC3=2;
 
 
 void setup() {
   size(1200, 700);
-  //inicializamos la libreria
-  // tuioClient  = new TuioProcessing(this);
-  Fisica.init(this);//inicializamos la libreria
 
-  fondo=loadImage("castillo2.png");//poner un array de todas las imagenes del juego
+  tiempoOcurridoDisparar = millis();
 
-  //inicio un mundo//
+  tuio= new Tuio();
+  tuioClient  = new TuioProcessing(this);
+
+  Fisica.init(this);
+
+  fondo=loadImage("castillo2.png");
+
+
   mundo=new FWorld();
   mundo.setEdges();
 
-  //inicio al personaje y dibujo//
-  p= new personaje(80, 100); //ancho,alto
+  p= new personaje(80, 100); 
   p.dibujarPersonaje(mundo);
 
-  //incio  base//
-  Base = new base(115, 260, 90, 570); //ancho,alto,posX,posY
+  Base = new base(115, 260, 90, 570); 
   Base.dibujarBase();
 
-  //inicio clase arco
-  a = new Arco(50, 450); //posicion del arco
+  a = new Arco(50, 450); 
 
-  //inicio al enemigo
+
   enemigo = new Enemigo(200, 200, mundo, bola);
   enemigo.cuerpo();
   enemigo.dibujarCabeza1();
   enemigo.dibujarCabeza2();
   enemigo.dibujarCabeza3();
-
-  //inicio bolas de fuego
+  enemigo.cadenaCabezas();
+  limiteCabeza = new Limite();
+  limiteCabeza.dibujarRects();
   bola = new BolaDeFuego(50, 50, mundo, enemigo);
 }
+
+
+
+
 
 
 void draw() {
@@ -60,10 +68,35 @@ void draw() {
   mundo.step();
   mundo.draw();
 
-
   a.movimientoArco();
   a.dibujar();  
   a.eliminarBala();
+
+  pushStyle();
+  fill(255, 0, 0); 
+  textSize(20);
+  textAlign(CENTER);
+  text("VIDAS PERSONAJE: " + vidasP, 140, 50);
+  popStyle();
+
+
+
+
+  if (frameCount %500 == 0 ) { 
+    if (millis()  > tiempoDisparar) { 
+      bola.dibujarB1();
+    }
+  }
+  if (frameCount %970 == 0 ) { 
+    if (millis()  > tiempoDisparar) { 
+      bola.dibujarB2();
+    }
+  }
+  if (frameCount %850 == 0 ) { 
+    if (millis()  > tiempoDisparar) { 
+      bola.dibujarB3();
+    }
+  }
 
 
   fill(255, 0, 0); 
@@ -72,19 +105,28 @@ void draw() {
   text("VidaC1: " + vidaC1, width/2+200, 50);
   text("VidaC2: " + vidaC2, width/2+350, 50);
   text("VidaC3: " + vidaC3, width/2+500, 50);
-
   bola.eliminarBola();
+  enemigo.movimientoCabezas();
+  enemigo.movimientoCabeza2();
+  enemigo.movimientoCabeza3();
+  //println(p.estado);
+
+  tuio.ejecutarTuio();
+  p.acciones( );
+
+  
+  
+  if ( tuio.estadoPj==3) {   
+    a.disparar( mundo );
+  }
 }
 
-void keyPressed() {
-  if ( key==' ' ) {
-    a.disparar( mundo );
-    bola.dibujarB1();
-    bola.dibujarB2();
-    bola.dibujarB3();
-  } 
-  p.acciones( );
-}
+
+
+
+
+
+
 
 
 void contactStarted(FContact colision) {
@@ -95,6 +137,8 @@ void contactStarted(FContact colision) {
     vidaC1 = vidaC1 - 1;
     if (vidaC1==0) {
       mundo.remove(dos);
+      enemigo.estadoC1 = 0;
+      //println(enemigo.estadoC1);
     }
   }
 
@@ -104,6 +148,8 @@ void contactStarted(FContact colision) {
     vidaC2 = vidaC2 - 1;
     if (vidaC2==0) {
       mundo.remove(dos);
+      enemigo.estadoC2 = 0;
+      //  println(enemigo.estadoC2);
     }
   }
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza3")) {
@@ -112,6 +158,19 @@ void contactStarted(FContact colision) {
     vidaC3 = vidaC3 - 1;
     if (vidaC3==0) {
       mundo.remove(dos);
+      enemigo.estadoC3 = 0;
+      //  println(enemigo.estadoC3);
     }
+  }
+
+  //colision de bolas de enemigo y personaje
+  if (enemigo.hayColisionEntre(colision, "bola1", "personaje") || enemigo.hayColisionEntre(colision, "bola2", "personaje") || enemigo.hayColisionEntre(colision, "bola3", "personaje")) {
+    vidasP = vidasP - 1;
+  }
+  if (enemigo.hayColisionEntre(colision, "bola1", "salto") || enemigo.hayColisionEntre(colision, "bola2", "salto") || enemigo.hayColisionEntre(colision, "bola3", "salto")) {
+    vidasP = vidasP - 1;
+  }
+  if (enemigo.hayColisionEntre(colision, "bola1", "normal") || enemigo.hayColisionEntre(colision, "bola2", "normal") || enemigo.hayColisionEntre(colision, "bola3", "normal")) {
+    vidasP = vidasP - 1;
   }
 }
