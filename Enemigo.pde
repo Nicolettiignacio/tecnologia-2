@@ -82,7 +82,7 @@ class Enemigo {
     enemigoCabeza2.setPosition(px2, py2);
     cabeza2=loadImage("cabeza2.png");
     enemigoCabeza2.setDensity(0.3); 
-    enemigoCabeza2.attachImage(cabeza2);
+    //enemigoCabeza2.attachImage(cabeza2);
     enemigoCabeza2.setGrabbable(false);
     enemigoCabeza2.setRotatable(false);
     enemigoCabeza2.setGroupIndex(-2);

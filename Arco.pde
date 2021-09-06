@@ -12,6 +12,8 @@ int tiempo = 2250;
 int tiempoOcurrido;
 float dir = 0.01;
 
+int disparoFlecha=1;
+
 class Arco {
 
   FBox bala;
@@ -24,6 +26,7 @@ class Arco {
     tamX = 80; //tamaño del arco
     tamY = 80;
     angulo = radians(90);
+    
   }
 
 
@@ -39,29 +42,36 @@ class Arco {
 
     angulo = angulo -dir;
     angulo = constrain( angulo, 
-    radians(-30), radians(50) );
+      radians(-30), radians(50) );
     if (angulo == radians(-30)) {
       dir = dir * -1;
     }
-   if(angulo == radians(50)) {
+    if (angulo == radians(50)) {
       dir = dir * -1;
     }
   }
 
+
   void disparar(FWorld mundo) {
-    bala = new FBox (tamXBala, tamYBala );
-    bala.setPosition(pos_X + 150, pos_Y - 100 );
-    bala.attachImage(flecha);  
-    float vx = velocidad * cos( angulo );
-    float vy = velocidad * sin( angulo );
-    bala.setGrabbable(false);
-    bala.setVelocity( vx, vy );
-    bala.setRestitution(1.5);
-    bala.setName("bala1"); 
-    tiempoOcurrido = millis();
-    bala.setGroupIndex(-1);
-    mundo.add(bala);
+    if(disparoFlecha==1){
+      bala = new FBox (tamXBala, tamYBala );
+      bala.setPosition(pos_X + 150, pos_Y - 100 );
+      bala.attachImage(flecha);  
+      float vx = velocidad * cos( angulo );
+      float vy = velocidad * sin( angulo );
+      bala.setGrabbable(false);
+      bala.setVelocity( vx, vy );
+      bala.setRestitution(1.5);
+      bala.setName("bala1"); 
+      tiempoOcurrido = millis();
+      bala.setGroupIndex(-1);
+      mundo.add(bala);
+      println(disparoFlecha);
+    }
   }
+
+
+
 
   void eliminarBala() {    
     ArrayList <FBody> cuerpos = mundo.getBodies();
@@ -77,4 +87,20 @@ class Arco {
       }
     }
   }
+
+  void Hayflecha() {
+    ArrayList <FBody> cuerpos = mundo.getBodies();
+    for ( FBody este : cuerpos ) {
+      String nombre = este.getName();
+      if ( nombre != null ) {
+        if ( nombre.equals("bala1") ) {
+          disparoFlecha=0;
+        }
+     
+      }
+    }
+  }
+  
+  
+  
 }

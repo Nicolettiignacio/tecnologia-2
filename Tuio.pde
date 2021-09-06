@@ -1,7 +1,7 @@
 class Tuio {
 
   int estadoPj=0;
-
+  PImage cursor;
   Tuio() {
 
     //inicializamos la libreria
@@ -12,6 +12,7 @@ class Tuio {
     //creamos una fuente
     //font = createFont("Arial", 20);
     //textFont(font);
+    cursor=loadImage("cursor.png");
   }
 
   void ejecutarTuio() {
@@ -30,16 +31,18 @@ class Tuio {
       pushMatrix();
       //hacemos un translate segun la ubicacion el objeto
       translate(patron.getScreenX(width), patron.getScreenY(height));
-      ellipse(0, 0, 50, 50);
+
+
+      image(cursor, 0, 0, 50, 50);
+
       popMatrix();
       fill(255, 0, 0);
       //dibujamos el texto segun las coordenadas del patron
-      text(""+patron.getSymbolID(), patron.getScreenX(width), patron.getScreenY(height));
+      //text(""+patron.getSymbolID(), patron.getScreenX(width), patron.getScreenY(height));
 
-      println(estadoPj);
+
 
       //SALTO
-
       if (patron.getScreenY(height)<200) {
         estadoPj=1;
       } 
@@ -47,25 +50,36 @@ class Tuio {
       if (patron.getScreenY(height)>500) {
         estadoPj=2;
       }
+
+      //Normal
       if ((patron.getScreenY(height)<500) && (patron.getScreenY(height)>200)) {
         estadoPj=0;
       }
+      //Disparo
       if ((patron.getScreenX(width)<200)) {
         estadoPj=3;
       }
 
 
 
-
-
-
-      /* if (patron.getScreenY(height)<200) {
-       estadoPj="salto";
-       if (patron.getScreenY(height)>500) {
-       estadoPj="cubrirse";
-       } }else {
-       estadoPj="normal";
-       }*/
+//Inicio
+      if (pantalla==0) {
+        if ((patron.getScreenX(width)>250)&&(patron.getScreenX(width)<400)&&(patron.getScreenY(height)>350)&& (patron.getScreenY(height)<500)) {
+          pantalla=1;
+        }
+      }
+//Perder
+      if (pantalla==2) {
+        if ((patron.getScreenX(width)>1000)&&(patron.getScreenX(width)<1100)&&(patron.getScreenY(height)>550)&& (patron.getScreenY(height)<600)) {
+          pantalla=0;
+        }
+      }
+//GANAR   
+     /* if (pantalla==3) {
+        if ((patron.getScreenX(width)>1000)&&(patron.getScreenX(width)<1100)&&(patron.getScreenY(height)>550)&& (patron.getScreenY(height)<600)) {
+          pantalla=0;
+        }
+      }*/
     }
   }
 }

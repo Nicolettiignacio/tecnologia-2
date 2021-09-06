@@ -61,7 +61,7 @@
     bola3.setPosition(enemigo.px3, enemigo.py3);
     bola3.attachImage(bola1);  //imagen de la flecha
     bola3.setGrabbable(true);
-    bola3.setVelocity(-1000, -100);
+    bola3.setVelocity(-1000, random(50,150));
     tiempoOcurrido = millis();
     bola3.setGrabbable(false);
     bola3.setGroupIndex(-1);
