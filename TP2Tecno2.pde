@@ -4,8 +4,6 @@ import fisica.*; //importo la libreria de fisica
 import TUIO.*; //Declaramos un objeto de tipo TuioProcessing
 TuioProcessing tuioClient;
 
-
-
 SoundFile fondoMusica;
 SoundFile FlechaMusica;
 SoundFile HidraMusica;
@@ -13,11 +11,7 @@ SoundFile FescudoMusica;
 SoundFile FlamaMusica;
 
 
-
-
-PImage fondo;
 FWorld mundo;
-
 personaje p;
 base Base;
 Arco a;                
@@ -29,19 +23,20 @@ Tuio tuio;
 int vidaC1=3, vidaC2=3, vidaC3=3;//VIDA DE LAS CABEZAS
 float restarVida = 585;
 
-int tiempoDisparar = 5000;
-int tiempoOcurridoDisparar=5000;
+int tiempoDisparar = 5000;// 5 segundos para disparar bolas de fuego
 
 float restarVidaPersonaje = -585;//VIDA DEL PERSONAJE
 int vidaPersonaje=3;
 
 int pantalla=1;
-PImage inicio, perder, ganar;
+
+PImage fondo, inicio, perder, ganar;
 
 
 void setup() {
   size(1200, 700);
 
+  //Inicio de Sonidos
   fondoMusica = new SoundFile(this, "Fondo.wav");
 
   fondoMusica.play();
@@ -55,18 +50,12 @@ void setup() {
   FescudoMusica = new SoundFile(this, "Fescudo.mp3");
 
   HidraMusica = new SoundFile(this, "Hidra.wav");
-
-
-
-
-
+  //Inicio de Sonidos
 
   tuio= new Tuio();
   tuioClient  = new TuioProcessing(this);
 
   Fisica.init(this);
-
-  fondo=loadImage("castillo2.png");
 
 
   mundo=new FWorld();
@@ -91,7 +80,7 @@ void setup() {
   limiteCabeza.dibujarRects();
   bola = new BolaDeFuego(50, 50, mundo, enemigo);
 
-
+  fondo=loadImage("castillo2.png");
   inicio=loadImage("inicio.png");
   perder=loadImage("perder.png");
   ganar=loadImage("ganar.png");
@@ -99,9 +88,7 @@ void setup() {
 
 
 void draw() {
-
-
-
+  
   if (pantalla==0) {
 
     image(inicio, 0, 0, 1200, 700);
@@ -134,13 +121,10 @@ void draw() {
     enemigo.estadoC3 = 1;
   }
 
-
-
-
   if (pantalla==3) {
 
     image(ganar, 0, 0, 1200, 700);
-    
+
     vidaC1=3;
     vidaC2=3; 
     vidaC3=3;
@@ -151,9 +135,6 @@ void draw() {
     enemigo.estadoC2 = 1;
     enemigo.estadoC3 = 1;
   }
-
-
-
 
   if (pantalla==1) {
 
@@ -182,32 +163,20 @@ void draw() {
         bola.dibujarB3();
       }
     }
-
-
-    fill(255, 0, 0); 
-    textSize(20);
-    textAlign(CENTER);
-
-
-    //pushStyle();
+    
+    //Barras de vida
     fill(0, 255, 0);
     stroke(2);
     rect(width/2, 40, restarVida, 20);
-    // popStyle();
-
-
-    //pushStyle();
+ 
     fill(255, 0, 0, 0);
     stroke(2);
     rect(15, 40, width-30, 20);
-    // popStyle();
 
-
-    //pushStyle();
     stroke(2);
     fill(255, 0, 0);
     rect(width/2, 40, restarVidaPersonaje, 20);
-    //popStyle();
+    //Barras de vida
 
 
 
@@ -216,9 +185,7 @@ void draw() {
     enemigo.movimientoCabezas();
     enemigo.movimientoCabeza2();
     enemigo.movimientoCabeza3();
-    //println(p.estado);
-
-
+    
     p.acciones( );
 
 
@@ -232,7 +199,7 @@ void draw() {
       pantalla=3;
     }
 
-
+//EVALUA SI EL PERSONAJE ESTA EN ESTADO 3=NORMAL Y DISPARA O NO
     if ( (tuio.estadoPj==3) ) {
       a.disparar( mundo );
     }
@@ -260,7 +227,6 @@ void contactStarted(FContact colision) {
     if (vidaC1==0) {
       mundo.remove(dos);
       enemigo.estadoC1 = 0;
-      //println(enemigo.estadoC1);
     }
   }
 
@@ -273,7 +239,6 @@ void contactStarted(FContact colision) {
     if (vidaC2==0) {
       mundo.remove(dos);
       enemigo.estadoC2 = 0;
-      //  println(enemigo.estadoC2);
     }
   }
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza3")) {
@@ -289,10 +254,6 @@ void contactStarted(FContact colision) {
   }
 
   //colision de bolas de enemigo y personaje
-  if (enemigo.hayColisionEntre(colision, "bola1", "personaje") || enemigo.hayColisionEntre(colision, "bola2", "personaje") || enemigo.hayColisionEntre(colision, "bola3", "personaje")) {
-    //restarVidaPersonaje = restarVidaPersonaje+195;
-   // vidaPersonaje=vidaPersonaje-1;
-  }
   if (enemigo.hayColisionEntre(colision, "bola1", "salto") || enemigo.hayColisionEntre(colision, "bola2", "salto") || enemigo.hayColisionEntre(colision, "bola3", "salto")) {
     restarVidaPersonaje = restarVidaPersonaje+195;
     vidaPersonaje=vidaPersonaje-1;

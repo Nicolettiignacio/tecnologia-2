@@ -14,7 +14,7 @@ float dir = 0.01;
 
 int disparoFlecha=0;
 
-int tiempoDisparo=0; //300;
+int tiempoDisparo=0;
 boolean Taprobado=true;
 
 
@@ -30,9 +30,6 @@ class Arco {
     tamX = 80; //tamaño del arco
     tamY = 80;
     angulo = radians(90);
-    
-    
-    
   }
 
 
@@ -74,36 +71,29 @@ class Arco {
       mundo.add(bala);
       Taprobado=false;
 
-FlechaMusica.play();
-   
-      
+      FlechaMusica.play();
     }
 
-   if (tiempoDisparo==0)/*180)*/ {//3 Segundos
-       Taprobado=true;
-       tiempoDisparo=0;
-         
-        
-      }else{  tiempoDisparo=tiempoDisparo+1;}
- 
+    if (tiempoDisparo==0)/*180)*/ {//3 Segundos
+      Taprobado=true;
+      tiempoDisparo=0;
+    } else {  
+      tiempoDisparo=tiempoDisparo+1;
+    }
   }
 
+  void eliminarBala() {    
+    ArrayList <FBody> cuerpos = mundo.getBodies();
 
-
-
-void eliminarBala() {    
-  ArrayList <FBody> cuerpos = mundo.getBodies();
-
-  for ( FBody este : cuerpos ) {
-    String nombre = este.getName();
-    if ( nombre != null ) {  
-      if (nombre.equals("bala1")) { 
-        if (millis() - tiempoOcurrido > tiempo) {
-          mundo.remove(este);
+    for ( FBody este : cuerpos ) {
+      String nombre = este.getName();
+      if ( nombre != null ) {  
+        if (nombre.equals("bala1")) { 
+          if (millis() - tiempoOcurrido > tiempo) {
+            mundo.remove(este);
+          }
         }
       }
     }
   }
-}
-
 }

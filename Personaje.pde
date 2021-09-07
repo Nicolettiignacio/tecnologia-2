@@ -27,10 +27,7 @@ class personaje {
     mundo.add(personaje);
     
   }
-
-
-
-
+  
   void eliminarNormal() {
     ArrayList <FBody> cuerpos = mundo.getBodies();
     for ( FBody este : cuerpos ) {
@@ -97,7 +94,6 @@ class personaje {
       eliminarCubrir();
       eliminarNormal1(); 
       eliminarSalto();
-      //estado=1;
     }
 
     if ( tuio.estadoPj==2) {
@@ -113,7 +109,6 @@ class personaje {
       eliminarSalto();
       eliminarNormal1();
       eliminarCubrir();
-   // estado=2;
     }
 
 
@@ -129,7 +124,6 @@ class personaje {
       eliminarCubrir();
       eliminarSalto();
       eliminarNormal1();
-     // estado=0;
     }
   }
   

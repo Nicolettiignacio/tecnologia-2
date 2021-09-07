@@ -6,12 +6,6 @@ class Tuio {
 
     //inicializamos la libreria
 
-    noStroke();
-    fill(255);
-    ellipseMode(CENTER);
-    //creamos una fuente
-    //font = createFont("Arial", 20);
-    //textFont(font);
     cursor=loadImage("cursor.png");
   }
 
