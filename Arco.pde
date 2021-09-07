@@ -12,7 +12,11 @@ int tiempo = 2250;
 int tiempoOcurrido;
 float dir = 0.01;
 
-int disparoFlecha=1;
+int disparoFlecha=0;
+
+int tiempoDisparo=0; //300;
+boolean Taprobado=true;
+
 
 class Arco {
 
@@ -22,10 +26,12 @@ class Arco {
     pos_X = posX;
     pos_Y = posY;
     arco = loadImage("arco.png");
-    flecha = loadImage("flecha2.png");
+    flecha = loadImage("flecha4.png");
     tamX = 80; //tamaño del arco
     tamY = 80;
     angulo = radians(90);
+    
+    
     
   }
 
@@ -53,7 +59,7 @@ class Arco {
 
 
   void disparar(FWorld mundo) {
-    if(disparoFlecha==1){
+    if (Taprobado==true) {
       bala = new FBox (tamXBala, tamYBala );
       bala.setPosition(pos_X + 150, pos_Y - 100 );
       bala.attachImage(flecha);  
@@ -61,46 +67,43 @@ class Arco {
       float vy = velocidad * sin( angulo );
       bala.setGrabbable(false);
       bala.setVelocity( vx, vy );
-      bala.setRestitution(1.5);
+      bala.setRestitution(0.5);
       bala.setName("bala1"); 
       tiempoOcurrido = millis();
       bala.setGroupIndex(-1);
       mundo.add(bala);
-      println(disparoFlecha);
+      Taprobado=false;
+
+FlechaMusica.play();
+   
+      
     }
+
+   if (tiempoDisparo==0)/*180)*/ {//3 Segundos
+       Taprobado=true;
+       tiempoDisparo=0;
+         
+        
+      }else{  tiempoDisparo=tiempoDisparo+1;}
+ 
   }
 
 
 
 
-  void eliminarBala() {    
-    ArrayList <FBody> cuerpos = mundo.getBodies();
+void eliminarBala() {    
+  ArrayList <FBody> cuerpos = mundo.getBodies();
 
-    for ( FBody este : cuerpos ) {
-      String nombre = este.getName();
-      if ( nombre != null ) {  
-        if (nombre.equals("bala1")) { 
-          if (millis() - tiempoOcurrido > tiempo) {
-            mundo.remove(este);
-          }
+  for ( FBody este : cuerpos ) {
+    String nombre = este.getName();
+    if ( nombre != null ) {  
+      if (nombre.equals("bala1")) { 
+        if (millis() - tiempoOcurrido > tiempo) {
+          mundo.remove(este);
         }
       }
     }
   }
+}
 
-  void Hayflecha() {
-    ArrayList <FBody> cuerpos = mundo.getBodies();
-    for ( FBody este : cuerpos ) {
-      String nombre = este.getName();
-      if ( nombre != null ) {
-        if ( nombre.equals("bala1") ) {
-          disparoFlecha=0;
-        }
-     
-      }
-    }
-  }
-  
-  
-  
 }

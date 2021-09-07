@@ -55,6 +55,9 @@ class Enemigo {
     hidra=loadImage("hidra2n.png");
     cuerpoEnemigo.attachImage(hidra);
     mundo.add(cuerpoEnemigo);
+    if (pantalla==1) {
+      HidraMusica.play();
+    }
   }
 
 
@@ -77,12 +80,13 @@ class Enemigo {
 
 
   void dibujarCabeza2() {
+
     enemigoCabeza2 = new FCircle(tamC1);
     enemigoCabeza2.setName("enemigoCabeza2");
     enemigoCabeza2.setPosition(px2, py2);
     cabeza2=loadImage("cabeza2.png");
     enemigoCabeza2.setDensity(0.3); 
-    //enemigoCabeza2.attachImage(cabeza2);
+    enemigoCabeza2.attachImage(cabeza2);
     enemigoCabeza2.setGrabbable(false);
     enemigoCabeza2.setRotatable(false);
     enemigoCabeza2.setGroupIndex(-2);
@@ -126,7 +130,7 @@ class Enemigo {
     joint.setFrequency(.05); 
     mundo.add(joint2);
     cool=200;   
-    tiempo = 0; 
+    tiempo = 0;
 
     joint3 = new FDistanceJoint(cuerpoEnemigo, enemigoCabeza3);
     joint3.setStroke(0, 0, 255);
@@ -151,9 +155,9 @@ class Enemigo {
   }
 
   void movimientoCabeza2() {  
-    enemigoCabeza2.addImpulse(random(impulso1, impulso2), random(impulso3, impulso4));
-  }
 
+    enemigoCabeza2.addImpulse(random(impulso1, impulso2-300), random(impulso3, impulso4-600));
+  }
   void movimientoCabeza3() {
     enemigoCabeza3.addImpulse(random(impulso1, impulso2), random(impulso3, impulso4));
   }

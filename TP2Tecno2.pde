@@ -1,6 +1,18 @@
+import processing.sound.*;
+
 import fisica.*; //importo la libreria de fisica 
 import TUIO.*; //Declaramos un objeto de tipo TuioProcessing
 TuioProcessing tuioClient;
+
+
+
+SoundFile fondoMusica;
+SoundFile FlechaMusica;
+SoundFile HidraMusica;
+SoundFile FescudoMusica;
+SoundFile FlamaMusica;
+
+
 
 
 PImage fondo;
@@ -14,27 +26,38 @@ BolaDeFuego bola;
 Limite limiteCabeza;
 Tuio tuio;
 
-
 int vidaC1=3, vidaC2=3, vidaC3=3;//VIDA DE LAS CABEZAS
 float restarVida = 585;
-
 
 int tiempoDisparar = 5000;
 int tiempoOcurridoDisparar=5000;
 
-float restarVidaPersonaje = -585;
-
-int tiempoDisparo;
-
+float restarVidaPersonaje = -585;//VIDA DEL PERSONAJE
+int vidaPersonaje=3;
 
 int pantalla=0;
 PImage inicio, perder, ganar;
 
-int vidaPersonaje=3;
-
 
 void setup() {
   size(1200, 700);
+
+  fondoMusica = new SoundFile(this, "Fondo.wav");
+
+  fondoMusica.play();
+  fondoMusica.amp(0.08);
+  fondoMusica.loop();
+
+  FlechaMusica = new SoundFile(this, "flecha.mp3");
+
+  FlamaMusica =new SoundFile(this, "flama1.mp3");
+
+  FescudoMusica = new SoundFile(this, "Fescudo.mp3");
+
+  HidraMusica = new SoundFile(this, "Hidra.wav");
+
+
+
 
 
 
@@ -69,22 +92,20 @@ void setup() {
   bola = new BolaDeFuego(50, 50, mundo, enemigo);
 
 
-  inicio=loadImage("inicio.jpg");
-  perder=loadImage("perder.jpg");
-  ganar=loadImage("ganar.jpg");
+  inicio=loadImage("inicio.png");
+  perder=loadImage("perder.png");
+  ganar=loadImage("ganar.png");
 }
 
 
 void draw() {
-  tuio.ejecutarTuio();
+
+
+
   if (pantalla==0) {
 
     image(inicio, 0, 0, 1200, 700);
 
-    textSize(40);
-    fill(255, 0, 0);
-
-    text("The Spartan", 200, 200);
 
     fill(255, 0, 0);
     rect(250, 350, 150, 150);
@@ -93,40 +114,38 @@ void draw() {
     fill(0);
     text("Pon el casco\n aqui para \n comenzar ", 270, 400);
 
-    
-vidaC1=3;
-vidaC2=3; 
-vidaC3=3;
-vidaPersonaje=3;
-restarVida = 585;//vida de la hidra
-restarVidaPersonaje = -585;//vida personaje
-    
+
+    vidaC1=3;
+    vidaC2=3; 
+    vidaC3=3;
+    vidaPersonaje=3;
+    restarVida = 585;//vida de la hidra
+    restarVidaPersonaje = -585;//vida personaje
+    enemigo.estadoC1 = 1;
+    enemigo.estadoC2 = 1;
+    enemigo.estadoC3 = 1;
   }
 
   if (pantalla==2) {
 
     image(perder, 0, 0, 1200, 700);
 
-    textSize(40);
-    fill(255, 0, 0);
-
-    text("The Spartan", 200, 200);
-
-
-    textSize(50);
+    textSize(20);
     fill(0);
-    text("perdiste ", 950, 500);
+    text("Pon el casco dentro \n del rectangulo para  \n      volver a jugar  ", 220, 500);
 
-    rect(1000, 550, 100, 50);
-    
-        
-vidaC1=3;
-vidaC2=3; 
-vidaC3=3;
-vidaPersonaje=3;
-restarVida = 585;//vida de la hidra
-restarVidaPersonaje = -585;//vida personaje
+    rect(250, 600, 100, 50);
 
+
+    vidaC1=3;
+    vidaC2=3; 
+    vidaC3=3;
+    vidaPersonaje=3;
+    restarVida = 585;//vida de la hidra
+    restarVidaPersonaje = -585;//vida personaje
+    enemigo.estadoC1 = 1;
+    enemigo.estadoC2 = 1;
+    enemigo.estadoC3 = 1;
   }
 
 
@@ -135,26 +154,22 @@ restarVidaPersonaje = -585;//vida personaje
   if (pantalla==3) {
 
     image(ganar, 0, 0, 1200, 700);
-
-    textSize(40);
-    fill(255, 0, 0);
-
-    text("The Spartan", 200, 200);
-
-
     textSize(50);
     fill(0);
-    text("victoria", 950, 500);
+    text("victoria", 250, 500);
 
-    rect(1000, 550, 150, 100);
-    
-        
-vidaC1=3;
-vidaC2=3; 
-vidaC3=3;
-vidaPersonaje=3;
-restarVida = 585;//vida de la hidra
-restarVidaPersonaje = -585;//vida personaje
+    rect(150, 550, 150, 100);
+
+
+    vidaC1=3;
+    vidaC2=3; 
+    vidaC3=3;
+    vidaPersonaje=3;
+    restarVida = 585;//vida de la hidra
+    restarVidaPersonaje = -585;//vida personaje
+    enemigo.estadoC1 = 1;
+    enemigo.estadoC2 = 1;
+    enemigo.estadoC3 = 1;
   }
 
 
@@ -198,14 +213,14 @@ restarVidaPersonaje = -585;//vida personaje
     fill(0, 255, 0);
     stroke(2);
     rect(width/2, 40, restarVida, 20);
-   // popStyle();
+    // popStyle();
 
 
     //pushStyle();
     fill(255, 0, 0, 0);
     stroke(2);
     rect(15, 40, width-30, 20);
-   // popStyle();
+    // popStyle();
 
 
     //pushStyle();
@@ -223,7 +238,7 @@ restarVidaPersonaje = -585;//vida personaje
     enemigo.movimientoCabeza3();
     //println(p.estado);
 
-    
+
     p.acciones( );
 
 
@@ -239,21 +254,19 @@ restarVidaPersonaje = -585;//vida personaje
 
 
     if ( (tuio.estadoPj==3) ) {
-      a.Hayflecha();
       a.disparar( mundo );
     }
   }
   tuio.ejecutarTuio();
-  println(vidaPersonaje);
 }
 
 
 
-
-
-
-
-
+void keyPressed() {
+  if (key==' ') {
+    a.disparar( mundo );
+  }
+}
 
 
 void contactStarted(FContact colision) {
@@ -292,14 +305,13 @@ void contactStarted(FContact colision) {
     if (vidaC3==0) {
       mundo.remove(dos);
       enemigo.estadoC3 = 0;
-      //  println(enemigo.estadoC3);
     }
   }
 
   //colision de bolas de enemigo y personaje
   if (enemigo.hayColisionEntre(colision, "bola1", "personaje") || enemigo.hayColisionEntre(colision, "bola2", "personaje") || enemigo.hayColisionEntre(colision, "bola3", "personaje")) {
-    restarVidaPersonaje = restarVidaPersonaje+195;
-    vidaPersonaje=vidaPersonaje-1;
+    //restarVidaPersonaje = restarVidaPersonaje+195;
+   // vidaPersonaje=vidaPersonaje-1;
   }
   if (enemigo.hayColisionEntre(colision, "bola1", "salto") || enemigo.hayColisionEntre(colision, "bola2", "salto") || enemigo.hayColisionEntre(colision, "bola3", "salto")) {
     restarVidaPersonaje = restarVidaPersonaje+195;

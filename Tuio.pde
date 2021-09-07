@@ -75,11 +75,11 @@ class Tuio {
         }
       }
 //GANAR   
-     /* if (pantalla==3) {
+      if (pantalla==3) {
         if ((patron.getScreenX(width)>1000)&&(patron.getScreenX(width)<1100)&&(patron.getScreenY(height)>550)&& (patron.getScreenY(height)<600)) {
           pantalla=0;
         }
-      }*/
+      }
     }
   }
 }
