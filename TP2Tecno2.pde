@@ -35,7 +35,7 @@ int tiempoOcurridoDisparar=5000;
 float restarVidaPersonaje = -585;//VIDA DEL PERSONAJE
 int vidaPersonaje=3;
 
-int pantalla=0;
+int pantalla=1;
 PImage inicio, perder, ganar;
 
 
@@ -107,13 +107,6 @@ void draw() {
     image(inicio, 0, 0, 1200, 700);
 
 
-    fill(255, 0, 0);
-    rect(250, 350, 150, 150);
-
-    textSize(20);
-    fill(0);
-    text("Pon el casco\n aqui para \n comenzar ", 270, 400);
-
 
     vidaC1=3;
     vidaC2=3; 
@@ -129,13 +122,6 @@ void draw() {
   if (pantalla==2) {
 
     image(perder, 0, 0, 1200, 700);
-
-    textSize(20);
-    fill(0);
-    text("Pon el casco dentro \n del rectangulo para  \n      volver a jugar  ", 220, 500);
-
-    rect(250, 600, 100, 50);
-
 
     vidaC1=3;
     vidaC2=3; 
@@ -154,13 +140,7 @@ void draw() {
   if (pantalla==3) {
 
     image(ganar, 0, 0, 1200, 700);
-    textSize(50);
-    fill(0);
-    text("victoria", 250, 500);
-
-    rect(150, 550, 150, 100);
-
-
+    
     vidaC1=3;
     vidaC2=3; 
     vidaC3=3;

@@ -52,7 +52,7 @@ class Enemigo {
     cuerpoEnemigo.setPosition(950, 500);
     cuerpoEnemigo.setStatic(true);
     cuerpoEnemigo.setGrabbable(false);
-    hidra=loadImage("hidra2n.png");
+    hidra=loadImage("hidra2.png");
     cuerpoEnemigo.attachImage(hidra);
     mundo.add(cuerpoEnemigo);
     if (pantalla==1) {
