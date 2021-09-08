@@ -64,13 +64,13 @@ class Tuio {
       }
 //Perder
       if (pantalla==2) {
-        if ((patron.getScreenX(width)>1000)&&(patron.getScreenX(width)<1100)&&(patron.getScreenY(height)>550)&& (patron.getScreenY(height)<600)) {
+        if ((patron.getScreenX(width)>175)&&(patron.getScreenX(width)<275)&&(patron.getScreenY(height)>410)&& (patron.getScreenY(height)<485)) {
           pantalla=0;
         }
       }
 //GANAR   
       if (pantalla==3) {
-        if ((patron.getScreenX(width)>1000)&&(patron.getScreenX(width)<1100)&&(patron.getScreenY(height)>550)&& (patron.getScreenY(height)<600)) {
+        if ((patron.getScreenX(width)>70)&&(patron.getScreenX(width)<270)&&(patron.getScreenY(height)>400)&& (patron.getScreenY(height)<500)) {
           pantalla=0;
         }
       }

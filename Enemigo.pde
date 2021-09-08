@@ -31,7 +31,7 @@ class Enemigo {
   float impulso2 = 500;
   float impulso3 = -500;
   float impulso4 = 500;
-  int estadoC1;
+  int estadoC1=1;;
   int estadoC2;
   int estadoC3;
 
@@ -62,6 +62,7 @@ class Enemigo {
 
 
   void dibujarCabeza1() {
+  
     enemigoCabeza1 = new FCircle(tamC1);
     enemigoCabeza1.setPosition(px, py);
     enemigoCabeza1.setName("enemigoCabeza1");
@@ -72,8 +73,11 @@ class Enemigo {
     enemigoCabeza1.setGrabbable(false);
     enemigoCabeza1.setRotatable(false);
     enemigoCabeza1.setGroupIndex(-2);
+   
     mundo.add(enemigoCabeza1);
-    estadoC1 = 1;
+   // estadoC1 = 1;
+  
+  
   }
 
 

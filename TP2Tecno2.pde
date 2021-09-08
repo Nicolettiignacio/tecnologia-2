@@ -28,7 +28,7 @@ int tiempoDisparar = 5000;// 5 segundos para disparar bolas de fuego
 float restarVidaPersonaje = -585;//VIDA DEL PERSONAJE
 int vidaPersonaje=3;
 
-int pantalla=1;
+int pantalla=0;
 
 PImage fondo, inicio, perder, ganar;
 
@@ -72,9 +72,11 @@ void setup() {
 
   enemigo = new Enemigo(200, 200, mundo, bola);
   enemigo.cuerpo();
+
   enemigo.dibujarCabeza1();
   enemigo.dibujarCabeza2();
   enemigo.dibujarCabeza3();
+
   enemigo.cadenaCabezas();
   limiteCabeza = new Limite();
   limiteCabeza.dibujarRects();
@@ -88,11 +90,10 @@ void setup() {
 
 
 void draw() {
-  
+
   if (pantalla==0) {
 
     image(inicio, 0, 0, 1200, 700);
-
 
 
     vidaC1=3;
@@ -101,6 +102,7 @@ void draw() {
     vidaPersonaje=3;
     restarVida = 585;//vida de la hidra
     restarVidaPersonaje = -585;//vida personaje
+
     enemigo.estadoC1 = 1;
     enemigo.estadoC2 = 1;
     enemigo.estadoC3 = 1;
@@ -109,6 +111,7 @@ void draw() {
   if (pantalla==2) {
 
     image(perder, 0, 0, 1200, 700);
+
 
     vidaC1=3;
     vidaC2=3; 
@@ -124,6 +127,9 @@ void draw() {
   if (pantalla==3) {
 
     image(ganar, 0, 0, 1200, 700);
+
+
+
 
     vidaC1=3;
     vidaC2=3; 
@@ -163,12 +169,12 @@ void draw() {
         bola.dibujarB3();
       }
     }
-    
+
     //Barras de vida
     fill(0, 255, 0);
     stroke(2);
     rect(width/2, 40, restarVida, 20);
- 
+
     fill(255, 0, 0, 0);
     stroke(2);
     rect(15, 40, width-30, 20);
@@ -185,7 +191,7 @@ void draw() {
     enemigo.movimientoCabezas();
     enemigo.movimientoCabeza2();
     enemigo.movimientoCabeza3();
-    
+
     p.acciones( );
 
 
@@ -199,14 +205,28 @@ void draw() {
       pantalla=3;
     }
 
-//EVALUA SI EL PERSONAJE ESTA EN ESTADO 3=NORMAL Y DISPARA O NO
+    //EVALUA SI EL PERSONAJE ESTA EN ESTADO 3=NORMAL Y DISPARA O NO
     if ( (tuio.estadoPj==3) ) {
       a.disparar( mundo );
     }
   }
   tuio.ejecutarTuio();
-}
 
+
+  //HayCabeza();
+}
+void HayCabeza() {    
+  ArrayList <FBody> cuerpos = mundo.getBodies();
+
+  for ( FBody este : cuerpos ) {
+    String nombre = este.getName();
+    if ( nombre != null ) {  
+      if ((nombre.equals("enemigoCabeza1"))&&(nombre.equals("enemigoCabeza2"))&&(nombre.equals("enemigoCabeza3"))) { 
+      }else{enemigo.dibujarCabeza1();}
+      
+    }
+  }
+}
 
 
 void keyPressed() {
@@ -224,8 +244,10 @@ void contactStarted(FContact colision) {
     restarVida = restarVida-65;
     vidaC1=vidaC1-1;
     mundo.remove(uno);
+    
     if (vidaC1==0) {
       mundo.remove(dos);
+      
       enemigo.estadoC1 = 0;
     }
   }
@@ -236,9 +258,12 @@ void contactStarted(FContact colision) {
     restarVida = restarVida-65;
     vidaC2=vidaC2-1;
     mundo.remove(uno);
+    
     if (vidaC2==0) {
       mundo.remove(dos);
+      
       enemigo.estadoC2 = 0;
+     
     }
   }
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza3")) {
@@ -247,8 +272,10 @@ void contactStarted(FContact colision) {
     restarVida = restarVida-65;
     vidaC3=vidaC3-1;
     mundo.remove(uno);
+
     if (vidaC3==0) {
       mundo.remove(dos);
+      
       enemigo.estadoC3 = 0;
     }
   }
