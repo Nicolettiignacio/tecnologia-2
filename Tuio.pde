@@ -39,10 +39,14 @@ class Tuio {
       //SALTO
       if (patron.getScreenY(height)<200) {
         estadoPj=1;
+        PosJoystickX=100;
+        PosJoystickY=42;
       } 
       //Cubrirse
       if (patron.getScreenY(height)>500) {
         estadoPj=2;
+         PosJoystickX=100;
+        PosJoystickY=102;
       }
 
       //Normal

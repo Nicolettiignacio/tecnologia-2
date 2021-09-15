@@ -1,7 +1,7 @@
 class personaje {
 
   PImage salto, normal, cubierto;
-  int W, H, posX, posY, estado, cant;
+  int W, H, posX, posY, estadoP, cant;
   int H2;
   int posSalto;
 
@@ -12,7 +12,7 @@ class personaje {
     posX = 110;
     posY = 428;
     posSalto = 228;
-    estado = 0;
+    estadoP = 0;
   }
 
   void dibujarPersonaje(FWorld mundo) {
@@ -25,7 +25,7 @@ class personaje {
     personaje.setGrabbable(false);
     personaje.attachImage(normal);
     mundo.add(personaje);
-    
+    estadoP=0;
   }
   
   void eliminarNormal() {
@@ -94,6 +94,7 @@ class personaje {
       eliminarCubrir();
       eliminarNormal1(); 
       eliminarSalto();
+      estadoP=1;
     }
 
     if ( tuio.estadoPj==2) {
@@ -109,6 +110,7 @@ class personaje {
       eliminarSalto();
       eliminarNormal1();
       eliminarCubrir();
+      estadoP=2;
     }
 
 
@@ -124,7 +126,31 @@ class personaje {
       eliminarCubrir();
       eliminarSalto();
       eliminarNormal1();
+      estadoP=0;
     }
+  }
+  
+  void DibujarVidaPJ(){
+   stroke(2);
+    fill(255, 0, 0);
+    rect(45, Yvida, restarVidaPersonaje, 10);
+
+    fill(255, 0, 0, 0);
+    stroke(2);
+    rect(45, Yvida, 99, 10);
+
+    if (p.estadoP==2) {
+      Yvida=350;
+    }
+    if (p.estadoP==1) {
+      Yvida=125;
+    }
+
+    if (p.estadoP==0) {
+      Yvida=320;
+    }
+  
+  
   }
   
 }

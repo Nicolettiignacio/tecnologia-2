@@ -21,16 +21,29 @@ Limite limiteCabeza;
 Tuio tuio;
 
 int vidaC1=3, vidaC2=3, vidaC3=3;//VIDA DE LAS CABEZAS
-float restarVida = 585;
+float restarVidaC1= 99;
+float restarVidaC2= 99;
+float restarVidaC3= 99;
+int MarcoVidaC1=99;
+int MarcoVidaC2=99;
+int MarcoVidaC3=99;
 
 int tiempoDisparar = 5000;// 5 segundos para disparar bolas de fuego
 
-float restarVidaPersonaje = -585;//VIDA DEL PERSONAJE
+float restarVidaPersonaje = 99;//VIDA DEL PERSONAJE
 int vidaPersonaje=3;
+int Yvida=320;
 
-int pantalla=0;
+int pantalla=1;
 
 PImage fondo, inicio, perder, ganar;
+
+
+float PX;
+float PY;
+
+int PosJoystickX;
+int PosJoystickY;
 
 
 void setup() {
@@ -82,10 +95,13 @@ void setup() {
   limiteCabeza.dibujarRects();
   bola = new BolaDeFuego(50, 50, mundo, enemigo);
 
-  fondo=loadImage("castillo2.png");
+  // fondo=loadImage("castillo2.png");
+  fondo=loadImage("fondo.jpeg");
   inicio=loadImage("inicio.png");
   perder=loadImage("perder.png");
   ganar=loadImage("ganar.png");
+  
+  enemigo.dibujarCuello();
 }
 
 
@@ -100,7 +116,7 @@ void draw() {
     vidaC2=3; 
     vidaC3=3;
     vidaPersonaje=3;
-    restarVida = 585;//vida de la hidra
+
     restarVidaPersonaje = -585;//vida personaje
 
     enemigo.estadoC1 = 1;
@@ -117,7 +133,7 @@ void draw() {
     vidaC2=3; 
     vidaC3=3;
     vidaPersonaje=3;
-    restarVida = 585;//vida de la hidra
+
     restarVidaPersonaje = -585;//vida personaje
     enemigo.estadoC1 = 1;
     enemigo.estadoC2 = 1;
@@ -135,7 +151,7 @@ void draw() {
     vidaC2=3; 
     vidaC3=3;
     vidaPersonaje=3;
-    restarVida = 585;//vida de la hidra
+
     restarVidaPersonaje = -585;//vida personaje
     enemigo.estadoC1 = 1;
     enemigo.estadoC2 = 1;
@@ -145,7 +161,7 @@ void draw() {
   if (pantalla==1) {
 
 
-    image(fondo, 0, 0, width, height);
+    image(fondo, 0, 0);
     mundo.step();
     mundo.draw();
 
@@ -169,20 +185,6 @@ void draw() {
         bola.dibujarB3();
       }
     }
-
-    //Barras de vida
-    fill(0, 255, 0);
-    stroke(2);
-    rect(width/2, 40, restarVida, 20);
-
-    fill(255, 0, 0, 0);
-    stroke(2);
-    rect(15, 40, width-30, 20);
-
-    stroke(2);
-    fill(255, 0, 0);
-    rect(width/2, 40, restarVidaPersonaje, 20);
-    //Barras de vida
 
 
 
@@ -209,9 +211,38 @@ void draw() {
     if ( (tuio.estadoPj==3) ) {
       a.disparar( mundo );
     }
-  }
-  tuio.ejecutarTuio();
 
+
+    //joystick
+    fill(255, 0, 0, 0);//invisible
+    rect(25, 30, 150, 85);
+    rect(25, 30, 25, 85);//disparo
+    rect(50, 30, 125, 25);//salto
+    rect(50, 90, 125, 25);//cubierto
+
+    fill(0);
+    textSize(15);
+    text("saltar", 75, 45);
+    text("cubrirse", 75, 110);
+    text("normal", 75, 80);
+    text("t\ni\nr\no", 35, 40);
+    
+    fill(250,0,0);
+    ellipse(PosJoystickX,PosJoystickY,25,25);
+    
+    //Joystick
+    
+    
+    tuio.ejecutarTuio();
+    enemigo.DibujarvidasCabezas();
+    p.DibujarVidaPJ();
+  }
+
+
+
+
+  println("X"+PX);
+  println("Y"+PY);
 
   //HayCabeza();
 }
@@ -221,9 +252,10 @@ void HayCabeza() {
   for ( FBody este : cuerpos ) {
     String nombre = este.getName();
     if ( nombre != null ) {  
-      if ((nombre.equals("enemigoCabeza1"))&&(nombre.equals("enemigoCabeza2"))&&(nombre.equals("enemigoCabeza3"))) { 
-      }else{enemigo.dibujarCabeza1();}
-      
+      if ((nombre.equals("enemigoCabeza1"))&&(nombre.equals("enemigoCabeza2"))&&(nombre.equals("enemigoCabeza3"))) {
+      } else {
+        enemigo.dibujarCabeza1();
+      }
     }
   }
 }
@@ -236,18 +268,59 @@ void keyPressed() {
 }
 
 
+
+
+
+
+
 void contactStarted(FContact colision) {
+
+
+
+
+
+
+  FBody cuerpo1 = colision.getBody1();
+  FBody cuerpo2 = colision.getBody2();
+
+  String nombre1 = bola.conseguirNombre(cuerpo1);
+  String nombre2 = bola.conseguirNombre(cuerpo2);
+
+  if (nombre1 == ("normal") && nombre2 == "bola1") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "normal" && nombre1 == "bola1") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
+  if (nombre1 == ("normal") && nombre2 == "bola2") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "normal" && nombre1 == "bola2") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
+  if (nombre1 == ("normal") && nombre2 == "bola3") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "normal" && nombre1 == "bola3") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
+
+
+
+
+
+
 
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza1")) {
     FBody uno = colision.getBody1();
     FBody dos = colision.getBody2();     
-    restarVida = restarVida-65;
+    restarVidaC1 = restarVidaC1-33;
     vidaC1=vidaC1-1;
     mundo.remove(uno);
-    
+
     if (vidaC1==0) {
       mundo.remove(dos);
-      
+
       enemigo.estadoC1 = 0;
     }
   }
@@ -255,38 +328,37 @@ void contactStarted(FContact colision) {
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza2")) {
     FBody uno = colision.getBody1();
     FBody dos = colision.getBody2();     
-    restarVida = restarVida-65;
+    restarVidaC2 = restarVidaC2-33;
     vidaC2=vidaC2-1;
     mundo.remove(uno);
-    
+
     if (vidaC2==0) {
       mundo.remove(dos);
-      
+
       enemigo.estadoC2 = 0;
-     
     }
   }
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza3")) {
     FBody uno = colision.getBody1();
     FBody dos = colision.getBody2();   
-    restarVida = restarVida-65;
+    restarVidaC3 = restarVidaC3-33;
     vidaC3=vidaC3-1;
     mundo.remove(uno);
 
     if (vidaC3==0) {
       mundo.remove(dos);
-      
+
       enemigo.estadoC3 = 0;
     }
   }
 
   //colision de bolas de enemigo y personaje
   if (enemigo.hayColisionEntre(colision, "bola1", "salto") || enemigo.hayColisionEntre(colision, "bola2", "salto") || enemigo.hayColisionEntre(colision, "bola3", "salto")) {
-    restarVidaPersonaje = restarVidaPersonaje+195;
+    restarVidaPersonaje = restarVidaPersonaje-33;
     vidaPersonaje=vidaPersonaje-1;
   }
   if (enemigo.hayColisionEntre(colision, "bola1", "normal") || enemigo.hayColisionEntre(colision, "bola2", "normal") || enemigo.hayColisionEntre(colision, "bola3", "normal")) {
-    restarVidaPersonaje = restarVidaPersonaje+195;
+    restarVidaPersonaje = restarVidaPersonaje-33;
     vidaPersonaje=vidaPersonaje-1;
   }
 }

@@ -5,7 +5,7 @@ class BolaDeFuego {
   FBox rectangulo1;
 
   int ancho, alto;
-  PImage bola1;
+  PImage bola1,bolaH;
   float posRect1X = 680;
   float posRect1Y = 450;
   int tiempo = 1350;
@@ -28,6 +28,7 @@ class BolaDeFuego {
       bola.setName("bola1"); 
       bola.setPosition(enemigo.px, enemigo.py);
       bola1=loadImage("bola.png");
+       
       bola.attachImage(bola1);  
       bola.setGrabbable(true);
       bola.setVelocity(-1000, -100);
@@ -99,5 +100,41 @@ class BolaDeFuego {
         }
       }
     }
+  }
+
+
+  void dividirCirculo(FCircle bola) { //aca voy a crear los hijos de los circulos
+
+    float d = bola.getSize() / 2; //te toma el size del circulo y lo divide x 3
+    float x = bola.getX();
+    float y = bola.getY();
+
+    mundo.remove(bola);
+
+
+    for (int i = 0; i < 3; i ++) {
+      FCircle hijo = new FCircle( d ); 
+      hijo.setPosition( x + random(-d, d), y + random(-d, d));
+      hijo.setFill(255, 0, 0);
+      bolaH=loadImage("bolaH.png");
+      hijo.attachImage(bolaH);
+      mundo.add(hijo);
+    }
+  }
+
+  //funcion conseguir nombre
+  String conseguirNombre(FBody cuerpo) {
+
+    String nombre = "nada";
+
+    if (cuerpo != null) {
+      nombre = cuerpo.getName();
+    }
+
+    if (nombre == null) {
+      nombre = "nada";
+    }
+
+    return nombre;
   }
 }

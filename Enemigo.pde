@@ -31,7 +31,8 @@ class Enemigo {
   float impulso2 = 500;
   float impulso3 = -500;
   float impulso4 = 500;
-  int estadoC1=1;;
+  int estadoC1=1;
+  ;
   int estadoC2;
   int estadoC3;
 
@@ -62,7 +63,7 @@ class Enemigo {
 
 
   void dibujarCabeza1() {
-  
+
     enemigoCabeza1 = new FCircle(tamC1);
     enemigoCabeza1.setPosition(px, py);
     enemigoCabeza1.setName("enemigoCabeza1");
@@ -73,11 +74,9 @@ class Enemigo {
     enemigoCabeza1.setGrabbable(false);
     enemigoCabeza1.setRotatable(false);
     enemigoCabeza1.setGroupIndex(-2);
-   
+
     mundo.add(enemigoCabeza1);
-   // estadoC1 = 1;
-  
-  
+    // estadoC1 = 1;
   }
 
 
@@ -166,6 +165,59 @@ class Enemigo {
     enemigoCabeza3.addImpulse(random(impulso1, impulso2), random(impulso3, impulso4));
   }
 
+  void DibujarvidasCabezas() {
+    //cabeza1
+    float PX = enemigo.enemigoCabeza1.getX();
+    float PY= enemigo.enemigoCabeza1.getY();
+
+    float PosicionMarco=PX-50;
+    stroke(2);
+    fill(255, 0, 0);
+    rect(PX-50, PY-75, restarVidaC1, 10);
+
+    fill(255, 0, 0, 0);
+    stroke(2);
+    rect(PosicionMarco, PY-75, MarcoVidaC1, 10);
+    if (restarVidaC1==0) {
+      MarcoVidaC1=0;
+      // PosicionMarco=-1000;
+    }
+    //cabeza1
+    //cabeza 2
+    float PX2 = enemigo.enemigoCabeza2.getX();
+    float PY2= enemigo.enemigoCabeza2.getY();
+
+    float PosicionMarco2=PX2-50;
+    stroke(2);
+    fill(255, 0, 0);
+    rect(PX2-50, PY2-75, restarVidaC2, 10);
+
+    fill(255, 0, 0, 0);
+    stroke(2);
+    rect(PosicionMarco2, PY2-75, MarcoVidaC2, 10);
+    if (restarVidaC2==0) {
+      MarcoVidaC2=0;
+      // PosicionMarco=-1000;
+    }
+    //cabeza2
+    //cabeza 3
+    float PX3 = enemigoCabeza3.getX();
+    float PY3 = enemigoCabeza3.getY();
+
+    float PosicionMarco3=PX3-50;
+    stroke(2);
+    fill(255, 0, 0);
+    rect(PX3-50, PY3-75, restarVidaC3, 10);
+
+    fill(255, 0, 0, 0);
+    stroke(2);
+    rect(PosicionMarco3, PY3-75, MarcoVidaC3, 10);
+    if (restarVidaC3==0) {
+      MarcoVidaC3=0;
+      // PosicionMarco=-1000;
+    }
+    //cabeza 3
+  }
 
 
 
@@ -185,5 +237,71 @@ class Enemigo {
       }
     }
     return resultado;
+  }
+
+  void dibujarCuello() {
+    float PCX3 = enemigo.enemigoCabeza2.getX();
+    float PCY3= enemigo.enemigoCabeza2.getY();
+
+
+    float frequency = 25;
+    float damping = 1500;
+    float puenteY=350;
+    FBody[] steps = new FBody[1]; //cantidad de barras
+
+    int boxWidth = 300/(steps.length) - 2;
+
+
+
+    for (int i=0; i<steps.length; i++) {
+      steps[i] = new FBox(boxWidth, 15);
+      steps[i].setPosition(1100, puenteY); //barras unidas map(i, 0, steps.length-1, boxWidth, width-boxWidth), puenteY
+      steps[i].setNoStroke();
+      steps[i].setFill(120, 200, 190);
+      mundo.add(steps[i]);
+    }
+
+    for (int i=1; i<steps.length; i++) {
+      FDistanceJoint junta = new FDistanceJoint(steps[i-1], steps[i]);
+      junta.setAnchor1(50, 0);//boxWidth/2, 0
+      junta.setAnchor2(-boxWidth/2, 0);//-boxWidth/2, 0
+      junta.setFrequency(frequency);
+      junta.setDamping(damping);      //Uniones del medio
+      junta.setFill(0, 0, 255);
+      junta.calculateLength();
+      mundo.add(junta);
+    }
+
+    FCircle left = new FCircle(10);
+    left.setStatic(true);
+    left.setPosition(800/*0 200*/, 400/*puenteY*/);        //punta Izquierda punta verde
+    left.setDrawable(false);
+    left.setGrabbable(true);
+    mundo.add(left);
+
+    FCircle right = new FCircle(10);
+    right.setStatic(true);
+    right.setPosition(1025, 500);   //Punta derecha 250+100/*width*/, puenteY+50 punta roja
+    right.setDrawable(false);
+    mundo.add(right);
+
+    FDistanceJoint juntaPrincipio = new FDistanceJoint(steps[0], left);
+    juntaPrincipio.setAnchor1(-boxWidth/2, 0);
+    juntaPrincipio.setAnchor2(0, 100);//0,0
+    juntaPrincipio.setFrequency(frequency);
+    juntaPrincipio.setDamping(damping);
+    juntaPrincipio.calculateLength();
+    juntaPrincipio.setFill(0, 255, 0);   //linea que se va mover
+    mundo.add(juntaPrincipio);
+
+    FDistanceJoint juntaFinal = new FDistanceJoint(steps[steps.length-1], right);
+    juntaFinal.setAnchor1(boxWidth/2, 0);
+    juntaFinal.setAnchor2(0, 0);
+    juntaFinal.setFrequency(frequency);
+    juntaFinal.setDamping(damping);
+    juntaFinal.calculateLength();         //linea del cuello estatica
+    //juntaFinal.setDrawable(false);
+    juntaFinal.setFill(255, 0, 0);
+    mundo.add(juntaFinal);
   }
 }

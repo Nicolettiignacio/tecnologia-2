@@ -57,8 +57,10 @@ class Arco {
 
   void disparar(FWorld mundo) {
     if (Taprobado==true) {
+     //  float flecha1 = angulo.get(angulo);
+      
       bala = new FBox (tamXBala, tamYBala );
-      bala.setPosition(pos_X + 150, pos_Y - 100 );
+      bala.setPosition(pos_X + 150, pos_Y-200   );
       bala.attachImage(flecha);  
       float vx = velocidad * cos( angulo );
       float vy = velocidad * sin( angulo );
