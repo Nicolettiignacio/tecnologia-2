@@ -52,10 +52,15 @@ class Tuio {
       //Normal
       if ((patron.getScreenY(height)<500) && (patron.getScreenY(height)>200)) {
         estadoPj=0;
+         PosJoystickX=100;
+        PosJoystickY=72;
       }
       //Disparo
       if ((patron.getScreenX(width)<200)) {
         estadoPj=3;
+         PosJoystickX=38;
+        PosJoystickY=72;
+        
       }
 
 

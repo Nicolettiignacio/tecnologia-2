@@ -42,8 +42,8 @@ PImage fondo, inicio, perder, ganar;
 float PX;
 float PY;
 
-int PosJoystickX;
-int PosJoystickY;
+int PosJoystickX=100;
+int PosJoystickY=72;
 
 
 void setup() {
@@ -89,7 +89,7 @@ void setup() {
   enemigo.dibujarCabeza1();
   enemigo.dibujarCabeza2();
   enemigo.dibujarCabeza3();
-
+enemigo.dibujarCuello();
   enemigo.cadenaCabezas();
   limiteCabeza = new Limite();
   limiteCabeza.dibujarRects();
@@ -101,7 +101,7 @@ void setup() {
   perder=loadImage("perder.png");
   ganar=loadImage("ganar.png");
   
-  enemigo.dibujarCuello();
+  
 }
 
 
@@ -164,6 +164,7 @@ void draw() {
     image(fondo, 0, 0);
     mundo.step();
     mundo.draw();
+   //mundo.drawDebug();
 
     a.movimientoArco();
     a.dibujar();  
@@ -236,13 +237,15 @@ void draw() {
     tuio.ejecutarTuio();
     enemigo.DibujarvidasCabezas();
     p.DibujarVidaPJ();
-  }
+
+//println(enemigo.PXCuello);  
+
+}
 
 
 
 
-  println("X"+PX);
-  println("Y"+PY);
+ 
 
   //HayCabeza();
 }

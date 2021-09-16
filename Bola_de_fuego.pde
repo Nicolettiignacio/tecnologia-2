@@ -5,11 +5,18 @@ class BolaDeFuego {
   FBox rectangulo1;
 
   int ancho, alto;
-  PImage bola1,bolaH;
+  PImage bola1, bolaH;
   float posRect1X = 680;
   float posRect1Y = 450;
   int tiempo = 1350;
   int tiempoOcurrido;
+
+  float PXC1= enemigo.enemigoCabeza1.getX();
+  float PYC1= enemigo.enemigoCabeza1.getY();
+  float PXC2= enemigo.enemigoCabeza2.getX();
+  float PYC2= enemigo.enemigoCabeza2.getY();
+  float PXC3= enemigo.enemigoCabeza3.getX();
+  float PYC3= enemigo.enemigoCabeza3.getY();
 
   BolaDeFuego(int ancho_, int alto_, FWorld mundo, Enemigo Enemigo) {
 
@@ -26,9 +33,8 @@ class BolaDeFuego {
     if (enemigo.estadoC1 == 1) {
       FCircle bola = new FCircle (50);
       bola.setName("bola1"); 
-      bola.setPosition(enemigo.px, enemigo.py);
+      bola.setPosition(PXC1, PYC1);
       bola1=loadImage("bola.png");
-       
       bola.attachImage(bola1);  
       bola.setGrabbable(true);
       bola.setVelocity(-1000, -100);
@@ -46,7 +52,7 @@ class BolaDeFuego {
     if (enemigo.estadoC2 == 1) {
       FCircle bola2 = new FCircle (50);
       bola2.setName("bola2"); 
-      bola2.setPosition(enemigo.px2, enemigo.py2 );
+      bola2.setPosition(PXC2, PYC2 );
       bola2.attachImage(bola1);  //imagen de la flecha
       bola2.setGrabbable(true);
       bola2.setVelocity(-1000, -100);
@@ -62,7 +68,7 @@ class BolaDeFuego {
     if (enemigo.estadoC3 == 1) {
       FCircle bola3 = new FCircle (50);
       bola3.setName("bola3"); 
-      bola3.setPosition(enemigo.px3, enemigo.py3);
+      bola3.setPosition(PXC3, PYC3);
       bola3.attachImage(bola1);  //imagen de la flecha
       bola3.setGrabbable(true);
       bola3.setVelocity(-1000, random(50, 150));

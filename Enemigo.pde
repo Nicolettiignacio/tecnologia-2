@@ -5,13 +5,15 @@ class Enemigo {
   FDistanceJoint joint;
   FDistanceJoint joint2;
   FDistanceJoint joint3;
+  FDistanceJoint joint4;
 
   FCircle enemigoCabeza1;
   FCircle enemigoCabeza2;
   FCircle enemigoCabeza3;
   FBox cuerpoEnemigo;
 
-
+  float PYCuello ;
+  float PXCuello ;
   PImage hidra, cabeza1, cabeza2, cabeza3;
   float tamX;
   float tamY;
@@ -69,7 +71,7 @@ class Enemigo {
     enemigoCabeza1.setName("enemigoCabeza1");
     cabeza1=loadImage("cabeza.png");
     enemigoCabeza1.setDensity(0.3);
-    enemigoCabeza1.attachImage(cabeza1);
+    //enemigoCabeza1.attachImage(cabeza1);
     enemigoCabeza1.setStatic(false);
     enemigoCabeza1.setGrabbable(false);
     enemigoCabeza1.setRotatable(false);
@@ -103,51 +105,13 @@ class Enemigo {
     enemigoCabeza3.setName("enemigoCabeza3");
     enemigoCabeza3.setPosition(px3, py3);
     cabeza3=loadImage("cabeza3.png");
-    enemigoCabeza3.attachImage(cabeza3);
+    //enemigoCabeza3.attachImage(cabeza3);
     enemigoCabeza3.setRotatable(false);
     enemigoCabeza3.setGroupIndex(-2);
     enemigoCabeza3.setGrabbable(false);
     mundo.add(enemigoCabeza3);
     estadoC3 = 1;
   }
-
-
-  void cadenaCabezas() {      
-    joint = new FDistanceJoint(cuerpoEnemigo, enemigoCabeza1);
-    joint.setStroke(0, 0, 255);
-    joint.setFill(0, 0, 255);
-    joint.setLength(10);   //Distancia máxima que va a tratar de mantener el joint entre los 2 objetos
-    joint.setDamping(600); //Fuerza con la que va a tirar del objeto
-    joint.setFrequency(.00005); //Frecuencia con la que el joint va a tirar del objeto (creoq ue está en segundos)
-    joint.setDrawable(false);
-    mundo.add(joint);
-    cool=200;   //Variables para ajustar los tirones del cuello
-    tiempo = 0;
-
-    joint2 = new FDistanceJoint(cuerpoEnemigo, enemigoCabeza2);
-    joint2.setStroke(0, 0, 255);
-    joint2.setFill(0, 0, 255);
-    joint2.setLength(10);  
-    joint2.setDamping(600); 
-    joint2.setDrawable(false);
-    joint.setFrequency(.05); 
-    mundo.add(joint2);
-    cool=200;   
-    tiempo = 0;
-
-    joint3 = new FDistanceJoint(cuerpoEnemigo, enemigoCabeza3);
-    joint3.setStroke(0, 0, 255);
-    joint3.setFill(0, 0, 255);
-    joint3.setLength(400);  
-    joint3.setDamping(600); 
-    joint3.setDrawable(false);
-    joint.setFrequency(.05);
-    mundo.add(joint3);
-    cool=200;   
-    tiempo = 0;
-  }
-
-
 
 
   void movimientoCabezas() {
@@ -219,6 +183,41 @@ class Enemigo {
     //cabeza 3
   }
 
+  void cadenaCabezas() {      
+    joint = new FDistanceJoint(cuerpoEnemigo, enemigoCabeza1);
+    joint.setStroke(0, 0, 255);
+    joint.setFill(0, 0, 255);
+    joint.setLength(10);   //Distancia máxima que va a tratar de mantener el joint entre los 2 objetos
+    joint.setDamping(600); //Fuerza con la que va a tirar del objeto
+    joint.setFrequency(.00005); //Frecuencia con la que el joint va a tirar del objeto (creoq ue está en segundos)
+    joint.setDrawable(false);
+    mundo.add(joint);
+    cool=200;   //Variables para ajustar los tirones del cuello
+    tiempo = 0;
+
+    joint2 = new FDistanceJoint(cuerpoEnemigo, enemigoCabeza2);
+    joint2.setStroke(0, 0, 255);
+    joint2.setFill(0, 0, 255);
+    joint2.setLength(10);  
+    joint2.setDamping(600); 
+    joint2.setDrawable(false);
+    joint.setFrequency(.05); 
+    mundo.add(joint2);
+    cool=200;   
+    tiempo = 0;
+
+    joint3 = new FDistanceJoint(cuerpoEnemigo, enemigoCabeza3);
+    joint3.setStroke(0, 0, 255);
+    joint3.setFill(0, 0, 255);
+    joint3.setLength(400);  
+    joint3.setDamping(600); 
+    joint3.setDrawable(false);
+    joint.setFrequency(.05);
+    mundo.add(joint3);
+    cool=200;   
+    tiempo = 0;
+  }
+
 
 
   boolean hayColisionEntre( FContact contact, String nombreUno, String nombreDos ) {
@@ -240,68 +239,62 @@ class Enemigo {
   }
 
   void dibujarCuello() {
-    float PCX3 = enemigo.enemigoCabeza2.getX();
-    float PCY3= enemigo.enemigoCabeza2.getY();
 
+    float frequency = 5;
+    float damping = 1;
+    float puenteY;
+    puenteY = 50/*height/3*/; //altura de las puntas
 
-    float frequency = 25;
-    float damping = 1500;
-    float puenteY=350;
-    FBody[] steps = new FBody[1]; //cantidad de barras
+    FBody[] steps = new FBody[5]; //cantidad de barras 
+    int boxWidth = 200/(steps.length);
+    int boxHeight=60;
 
-    int boxWidth = 300/(steps.length) - 2;
-
-
+    int posCuelloX=1025;
+    int posCuelloY=height-200;
 
     for (int i=0; i<steps.length; i++) {
-      steps[i] = new FBox(boxWidth, 15);
-      steps[i].setPosition(1100, puenteY); //barras unidas map(i, 0, steps.length-1, boxWidth, width-boxWidth), puenteY
+      steps[i] = new FBox(boxWidth, boxHeight);
+      steps[i].setPosition(posCuelloX, posCuelloY-i*50); //barras unidas
+
       steps[i].setNoStroke();
       steps[i].setFill(120, 200, 190);
+      steps[i].setGroupIndex(-1);
+
+
+
+
+      if (i==0) {
+        steps[i].setStatic(true);
+      }
+
+
+      
+
+
       mundo.add(steps[i]);
     }
 
     for (int i=1; i<steps.length; i++) {
       FDistanceJoint junta = new FDistanceJoint(steps[i-1], steps[i]);
-      junta.setAnchor1(50, 0);//boxWidth/2, 0
-      junta.setAnchor2(-boxWidth/2, 0);//-boxWidth/2, 0
+      junta.setAnchor1(0, -15 );//height-20-(i-1)*50
+      junta.setAnchor2(0, 10);// height-20-i*50
       junta.setFrequency(frequency);
-      junta.setDamping(damping);      //Uniones del medio
-      junta.setFill(0, 0, 255);
+      junta.setDamping(damping);      //Uniones
+      junta.setFill(255, 0, 0);
       junta.calculateLength();
       mundo.add(junta);
     }
 
     FCircle left = new FCircle(10);
     left.setStatic(true);
-    left.setPosition(800/*0 200*/, 400/*puenteY*/);        //punta Izquierda punta verde
+    left.setPosition(/*0*/100, puenteY);        //punta Izquierda
     left.setDrawable(false);
-    left.setGrabbable(true);
     mundo.add(left);
 
     FCircle right = new FCircle(10);
     right.setStatic(true);
-    right.setPosition(1025, 500);   //Punta derecha 250+100/*width*/, puenteY+50 punta roja
+    right.setPosition(250+100/*width*/, puenteY+50);   //Punta derecha
     right.setDrawable(false);
     mundo.add(right);
-
-    FDistanceJoint juntaPrincipio = new FDistanceJoint(steps[0], left);
-    juntaPrincipio.setAnchor1(-boxWidth/2, 0);
-    juntaPrincipio.setAnchor2(0, 100);//0,0
-    juntaPrincipio.setFrequency(frequency);
-    juntaPrincipio.setDamping(damping);
-    juntaPrincipio.calculateLength();
-    juntaPrincipio.setFill(0, 255, 0);   //linea que se va mover
-    mundo.add(juntaPrincipio);
-
-    FDistanceJoint juntaFinal = new FDistanceJoint(steps[steps.length-1], right);
-    juntaFinal.setAnchor1(boxWidth/2, 0);
-    juntaFinal.setAnchor2(0, 0);
-    juntaFinal.setFrequency(frequency);
-    juntaFinal.setDamping(damping);
-    juntaFinal.calculateLength();         //linea del cuello estatica
-    //juntaFinal.setDrawable(false);
-    juntaFinal.setFill(255, 0, 0);
-    mundo.add(juntaFinal);
   }
 }
