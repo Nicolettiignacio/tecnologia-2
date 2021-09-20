@@ -1,4 +1,4 @@
-float pos_X;
+  float pos_X;
 float pos_Y;
 float tamX, tamY;
 PImage arco;
@@ -19,6 +19,7 @@ boolean Taprobado=true;
 
 
 class Arco {
+
 
   FBox bala;
 

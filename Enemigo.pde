@@ -33,10 +33,11 @@ class Enemigo {
   float impulso2 = 500;
   float impulso3 = -500;
   float impulso4 = 500;
+  
   int estadoC1=1;
-  ;
-  int estadoC2;
-  int estadoC3;
+  
+  int estadoC2=1;
+  int estadoC3=1;
 
   Enemigo(float tam_X, float tam_Y, FWorld mundo, BolaDeFuego bola) {
 
@@ -71,14 +72,13 @@ class Enemigo {
     enemigoCabeza1.setName("enemigoCabeza1");
     cabeza1=loadImage("cabeza.png");
     enemigoCabeza1.setDensity(0.3);
-    //enemigoCabeza1.attachImage(cabeza1);
+    enemigoCabeza1.attachImage(cabeza1);
     enemigoCabeza1.setStatic(false);
     enemigoCabeza1.setGrabbable(false);
     enemigoCabeza1.setRotatable(false);
     enemigoCabeza1.setGroupIndex(-2);
-
     mundo.add(enemigoCabeza1);
-    // estadoC1 = 1;
+ 
   }
 
 
@@ -105,7 +105,7 @@ class Enemigo {
     enemigoCabeza3.setName("enemigoCabeza3");
     enemigoCabeza3.setPosition(px3, py3);
     cabeza3=loadImage("cabeza3.png");
-    //enemigoCabeza3.attachImage(cabeza3);
+    enemigoCabeza3.attachImage(cabeza3);
     enemigoCabeza3.setRotatable(false);
     enemigoCabeza3.setGroupIndex(-2);
     enemigoCabeza3.setGrabbable(false);

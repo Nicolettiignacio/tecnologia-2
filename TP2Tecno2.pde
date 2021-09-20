@@ -34,7 +34,7 @@ float restarVidaPersonaje = 99;//VIDA DEL PERSONAJE
 int vidaPersonaje=3;
 int Yvida=320;
 
-int pantalla=1;
+int pantalla=0;
 
 PImage fondo, inicio, perder, ganar;
 
@@ -89,7 +89,7 @@ void setup() {
   enemigo.dibujarCabeza1();
   enemigo.dibujarCabeza2();
   enemigo.dibujarCabeza3();
-enemigo.dibujarCuello();
+  enemigo.dibujarCuello();
   enemigo.cadenaCabezas();
   limiteCabeza = new Limite();
   limiteCabeza.dibujarRects();
@@ -100,8 +100,6 @@ enemigo.dibujarCuello();
   inicio=loadImage("inicio.png");
   perder=loadImage("perder.png");
   ganar=loadImage("ganar.png");
-  
-  
 }
 
 
@@ -117,54 +115,46 @@ void draw() {
     vidaC3=3;
     vidaPersonaje=3;
 
-    restarVidaPersonaje = -585;//vida personaje
+    restarVidaPersonaje = 99;//vida personaje
 
-    enemigo.estadoC1 = 1;
-    enemigo.estadoC2 = 1;
-    enemigo.estadoC3 = 1;
+    restarVidaC1= 99;
+    restarVidaC2= 99;
+    restarVidaC3= 99;
+
+  
+
+    if (enemigo.estadoC1 ==0) {
+      enemigo.dibujarCabeza1();
+      enemigo.estadoC1 =1;
+
+      enemigo.dibujarCabeza2();
+      enemigo.estadoC2 =1;
+
+      enemigo.dibujarCabeza3();
+      enemigo.estadoC3 =1;
+    }
   }
 
   if (pantalla==2) {
-
     image(perder, 0, 0, 1200, 700);
-
-
-    vidaC1=3;
-    vidaC2=3; 
-    vidaC3=3;
-    vidaPersonaje=3;
-
-    restarVidaPersonaje = -585;//vida personaje
-    enemigo.estadoC1 = 1;
-    enemigo.estadoC2 = 1;
-    enemigo.estadoC3 = 1;
+    
+    vidaC1=0;
+    vidaC2=0; 
+    vidaC3=0;
   }
 
   if (pantalla==3) {
-
     image(ganar, 0, 0, 1200, 700);
-
-
-
-
-    vidaC1=3;
-    vidaC2=3; 
-    vidaC3=3;
-    vidaPersonaje=3;
-
-    restarVidaPersonaje = -585;//vida personaje
-    enemigo.estadoC1 = 1;
-    enemigo.estadoC2 = 1;
-    enemigo.estadoC3 = 1;
   }
+
 
   if (pantalla==1) {
 
 
     image(fondo, 0, 0);
     mundo.step();
-    mundo.draw();
-   //mundo.drawDebug();
+    //mundo.draw();
+    mundo.drawDebug();
 
     a.movimientoArco();
     a.dibujar();  
@@ -214,6 +204,8 @@ void draw() {
     }
 
 
+
+
     //joystick
     fill(255, 0, 0, 0);//invisible
     rect(25, 30, 150, 85);
@@ -227,26 +219,23 @@ void draw() {
     text("cubrirse", 75, 110);
     text("normal", 75, 80);
     text("t\ni\nr\no", 35, 40);
-    
-    fill(250,0,0);
-    ellipse(PosJoystickX,PosJoystickY,25,25);
-    
+
+    fill(250, 0, 0);
+    ellipse(PosJoystickX, PosJoystickY, 25, 25);
+
     //Joystick
-    
-    
-    tuio.ejecutarTuio();
+
+
+
     enemigo.DibujarvidasCabezas();
     p.DibujarVidaPJ();
-
-//println(enemigo.PXCuello);  
-
-}
+  }
 
 
 
 
- 
 
+  tuio.ejecutarTuio();
   //HayCabeza();
 }
 void HayCabeza() {    
