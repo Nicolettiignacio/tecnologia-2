@@ -34,7 +34,7 @@ float restarVidaPersonaje = 99;//VIDA DEL PERSONAJE
 int vidaPersonaje=3;
 int Yvida=320;
 
-int pantalla=0;
+int pantalla=1;
 
 PImage fondo, inicio, perder, ganar;
 
@@ -80,22 +80,23 @@ void setup() {
   Base = new base(115, 260, 90, 570); 
   Base.dibujarBase();
 
-  a = new Arco(50, 450); 
+  a = new Arco(200, 375); 
 
 
   enemigo = new Enemigo(200, 200, mundo, bola);
   enemigo.cuerpo();
+
 
   enemigo.dibujarCabeza1();
   enemigo.dibujarCabeza2();
   enemigo.dibujarCabeza3();
   enemigo.dibujarCuello();
   enemigo.cadenaCabezas();
+  
   limiteCabeza = new Limite();
   limiteCabeza.dibujarRects();
   bola = new BolaDeFuego(50, 50, mundo, enemigo);
 
-  // fondo=loadImage("castillo2.png");
   fondo=loadImage("fondo.jpeg");
   inicio=loadImage("inicio.png");
   perder=loadImage("perder.png");
@@ -153,8 +154,8 @@ void draw() {
 
     image(fondo, 0, 0);
     mundo.step();
-    //mundo.draw();
-    mundo.drawDebug();
+    mundo.draw();
+   // mundo.drawDebug();
 
     a.movimientoArco();
     a.dibujar();  
@@ -257,6 +258,9 @@ void keyPressed() {
   if (key==' ') {
     a.disparar( mundo );
   }
+  if(key=='s'){tuio.estadoPj=2;}
+  if(key=='w'){tuio.estadoPj=1;}  //BORRAR EN ENTREGA FINAL
+   if(key=='d'){tuio.estadoPj=0;}
 }
 
 

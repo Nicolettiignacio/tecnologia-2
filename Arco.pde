@@ -1,4 +1,4 @@
-  float pos_X;
+float pos_X;
 float pos_Y;
 float tamX, tamY;
 PImage arco;
@@ -24,9 +24,9 @@ class Arco {
   FBox bala;
 
   Arco(float posX, float posY) {
-    pos_X = posX;
-    pos_Y = posY;
-    arco = loadImage("arco.png");
+    pos_X = posX; //50
+    pos_Y = posY; //450
+    arco = loadImage("arco2.png");
     flecha = loadImage("flecha4.png");
     tamX = 80; //tamaño del arco
     tamY = 80;
@@ -38,7 +38,13 @@ class Arco {
     pushMatrix();
     translate(pos_X, pos_Y);
     rotate(angulo);
-    image(arco, pos_X / 2, -pos_Y / 2, tamX, tamY);
+
+    if(p.estadoP==0){
+    image(arco, -25, -30, tamX, tamY);
+    }
+    strokeWeight(5);
+    //line(0, 0, 50, 0);
+    strokeWeight(1);
     popMatrix();
   }
 
@@ -46,11 +52,11 @@ class Arco {
 
     angulo = angulo -dir;
     angulo = constrain( angulo, 
-      radians(-30), radians(50) );
-    if (angulo == radians(-30)) {
+      radians(-40), radians(30) ); 
+    if (angulo == radians(-40)) {
       dir = dir * -1;
     }
-    if (angulo == radians(50)) {
+    if (angulo == radians(30)) {
       dir = dir * -1;
     }
   }
@@ -58,10 +64,12 @@ class Arco {
 
   void disparar(FWorld mundo) {
     if (Taprobado==true) {
-     //  float flecha1 = angulo.get(angulo);
-      
-      bala = new FBox (tamXBala, tamYBala );
-      bala.setPosition(pos_X + 150, pos_Y-200   );
+
+      bala = new FBox (tamXBala, tamYBala );         
+
+      bala.setPosition(pos_X, pos_Y);
+      bala.setRotation(angulo);
+
       bala.attachImage(flecha);  
       float vx = velocidad * cos( angulo );
       float vy = velocidad * sin( angulo );
