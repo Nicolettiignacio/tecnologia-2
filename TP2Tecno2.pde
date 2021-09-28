@@ -1,7 +1,6 @@
 import processing.sound.*;
-
-import fisica.*; //importo la libreria de fisica 
-import TUIO.*; //Declaramos un objeto de tipo TuioProcessing
+import fisica.*;            //importo la libreria de fisica 
+import TUIO.*;              //Declaramos un objeto de tipo TuioProcessing
 TuioProcessing tuioClient;
 
 SoundFile fondoMusica;
@@ -15,18 +14,21 @@ FWorld mundo;
 personaje p;
 base Base;
 Arco a;                
-Enemigo enemigo;
+Enemigo enemigo;  //CLASES//
 BolaDeFuego bola; 
 Limite limiteCabeza;
 Tuio tuio;
 
-int vidaC1=3, vidaC2=3, vidaC3=3;//VIDA DE LAS CABEZAS
+//VIDA DE LAS CABEZAS
+int vidaC1=3, vidaC2=3, vidaC3=3;
 float restarVidaC1= 99;
 float restarVidaC2= 99;
 float restarVidaC3= 99;
 int MarcoVidaC1=99;
 int MarcoVidaC2=99;
 int MarcoVidaC3=99;
+//VIDA DE LAS CABEZAS
+
 
 int tiempoDisparar = 5000;// 5 segundos para disparar bolas de fuego
 
@@ -178,9 +180,6 @@ void draw() {
       }
     }
 
-
-
-
     bola.eliminarBola();
     enemigo.movimientoCabezas();
     enemigo.movimientoCabeza2();
@@ -232,26 +231,9 @@ void draw() {
     p.DibujarVidaPJ();
   }
 
-
-
-
-
   tuio.ejecutarTuio();
-  //HayCabeza();
 }
-void HayCabeza() {    
-  ArrayList <FBody> cuerpos = mundo.getBodies();
 
-  for ( FBody este : cuerpos ) {
-    String nombre = este.getName();
-    if ( nombre != null ) {  
-      if ((nombre.equals("enemigoCabeza1"))&&(nombre.equals("enemigoCabeza2"))&&(nombre.equals("enemigoCabeza3"))) {
-      } else {
-        enemigo.dibujarCabeza1();
-      }
-    }
-  }
-}
 
 
 void keyPressed() {
@@ -264,18 +246,7 @@ void keyPressed() {
 }
 
 
-
-
-
-
-
 void contactStarted(FContact colision) {
-
-
-
-
-
-
   FBody cuerpo1 = colision.getBody1();
   FBody cuerpo2 = colision.getBody2();
 
@@ -300,9 +271,6 @@ void contactStarted(FContact colision) {
   if (nombre2 == "normal" && nombre1 == "bola3") {
     bola.dividirCirculo((FCircle)cuerpo1);
   }
-
-
-
 
 
 

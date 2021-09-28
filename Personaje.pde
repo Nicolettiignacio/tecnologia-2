@@ -27,7 +27,7 @@ class personaje {
     mundo.add(personaje);
     estadoP=0;
   }
-  
+
   void eliminarNormal() {
     ArrayList <FBody> cuerpos = mundo.getBodies();
     for ( FBody este : cuerpos ) {
@@ -76,11 +76,8 @@ class personaje {
 
 
   void acciones() {
+    if (tuio.estadoPj==1) {
 
-    
-    
-     if (tuio.estadoPj==1){
-   
       FBox personaje2 = new FBox(W, H);
       salto =loadImage("salto.png");
       personaje2.setPosition(posX, posSalto);
@@ -113,7 +110,6 @@ class personaje {
       estadoP=2;
     }
 
-
     if (tuio.estadoPj==0) {
       FBox personaje4 = new FBox(W, H);
       cubierto =loadImage("normal1.png");
@@ -129,9 +125,9 @@ class personaje {
       estadoP=0;
     }
   }
-  
-  void DibujarVidaPJ(){
-   stroke(2);
+
+  void DibujarVidaPJ() {
+    stroke(2);
     fill(255, 0, 0);
     rect(45, Yvida, restarVidaPersonaje, 10);
 
@@ -149,8 +145,5 @@ class personaje {
     if (p.estadoP==0) {
       Yvida=320;
     }
-  
-  
   }
-  
 }

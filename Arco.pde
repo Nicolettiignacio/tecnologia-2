@@ -1,25 +1,23 @@
-float pos_X;
-float pos_Y;
-float tamX, tamY;
-PImage arco;
-PImage flecha;
-float angulo;
-float anguloVel = 0.5;
-float tamXBala = 70;
-float tamYBala = 30;
-float velocidad = 800; //VELOCIDAD DE LA BALA
-int tiempo = 2250;
-int tiempoOcurrido;
-float dir = 0.01;
-
-int disparoFlecha=0;
-
-int tiempoDisparo=0;
-boolean Taprobado=true;
-
-
 class Arco {
 
+  float pos_X;
+  float pos_Y;
+  float tamX, tamY;
+  PImage arco;
+  PImage flecha;
+  float angulo;
+  float anguloVel = 0.5;
+  float tamXBala = 70;
+  float tamYBala = 30;
+  float velocidad = 800; //VELOCIDAD DE LA BALA
+  int tiempo = 2250;
+  int tiempoOcurrido;
+  float dir = 0.01;
+
+  int disparoFlecha=0;
+
+  int tiempoDisparo=0;
+  boolean Taprobado=true;
 
   FBox bala;
 
@@ -39,8 +37,8 @@ class Arco {
     translate(pos_X, pos_Y);
     rotate(angulo);
 
-    if(p.estadoP==0){
-    image(arco, -25, -30, tamX, tamY);
+    if (p.estadoP==0) {
+      image(arco, -25, -30, tamX, tamY);
     }
     strokeWeight(5);
     //line(0, 0, 50, 0);
@@ -85,7 +83,7 @@ class Arco {
       FlechaMusica.play();
     }
 
-    if (tiempoDisparo==0)/*180)*/ {//3 Segundos
+    if (tiempoDisparo==90)/*180)*/ {//5 Segundos
       Taprobado=true;
       tiempoDisparo=0;
     } else {  

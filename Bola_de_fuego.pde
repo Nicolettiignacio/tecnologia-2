@@ -80,9 +80,6 @@ class BolaDeFuego {
     }
   }
 
-  void obtenerPosX() {
-  }
-
   void eliminarBola() {    
     ArrayList <FBody> cuerpos = mundo.getBodies();
 
@@ -104,6 +101,11 @@ class BolaDeFuego {
             mundo.remove(este);
           }
         }
+         if (nombre.equals("bolaH")) { 
+          if (millis() - tiempoOcurrido > tiempo) {
+            mundo.remove(este);
+          }
+        }
       }
     }
   }
@@ -117,13 +119,14 @@ class BolaDeFuego {
 
     mundo.remove(bola);
 
-
     for (int i = 0; i < 3; i ++) {
       FCircle hijo = new FCircle( d ); 
       hijo.setPosition( x + random(-d, d), y + random(-d, d));
       hijo.setFill(255, 0, 0);
       bolaH=loadImage("bolaH.png");
       hijo.attachImage(bolaH);
+      
+      hijo.setName("bolaH");
       mundo.add(hijo);
     }
   }

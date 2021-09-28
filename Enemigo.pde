@@ -1,6 +1,6 @@
 class Enemigo {
 
-  FWorld mundo;
+FWorld mundo;
   BolaDeFuego bola; 
   FDistanceJoint joint;
   FDistanceJoint joint2;

@@ -3,8 +3,6 @@ class base {
   PImage torre;
   int ancho, alto, posX, posY; 
 
-
-
   base(int ancho_, int alto_, int posX_, int posY_ ) {
     
     torre = loadImage("torre0.png");
@@ -14,8 +12,6 @@ class base {
     posY=posY_;
   }
   void dibujarBase() {
-
-
     FBox base = new FBox(ancho, alto);
     base.setPosition(posX, posY);
     base.setStatic(true);
