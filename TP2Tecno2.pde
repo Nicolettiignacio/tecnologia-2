@@ -74,7 +74,7 @@ void setup() {
 
 
   mundo=new FWorld();
-  mundo.setEdges();
+  mundo.setEdges(-100,-100,1300,700);
 
   p= new personaje(80, 100); 
   p.dibujarPersonaje(mundo);
@@ -135,6 +135,27 @@ void draw() {
 
       enemigo.dibujarCabeza3();
       enemigo.estadoC3 =1;
+      
+       ArrayList <FBody> cuerpos = mundo.getBodies();
+       for ( FBody este : cuerpos ) {
+      String nombre = este.getName();
+      if ( nombre != null ) {  
+        if (nombre.equals("cuello1")) { 
+           
+            mundo.remove(este);
+          }
+          if (nombre.equals("cuello2")) {  //borra los cuellos al morir la cabeza
+           
+            mundo.remove(este);
+          }
+          if (nombre.equals("cuello3")) { 
+           
+            mundo.remove(este);
+          }
+        }
+      }
+       
+      enemigo.dibujarCuello();
     }
   }
 
@@ -236,16 +257,6 @@ void draw() {
 
 
 
-void keyPressed() {
-  if (key==' ') {
-    a.disparar( mundo );
-  }
-  if(key=='s'){tuio.estadoPj=2;}
-  if(key=='w'){tuio.estadoPj=1;}  //BORRAR EN ENTREGA FINAL
-   if(key=='d'){tuio.estadoPj=0;}
-}
-
-
 void contactStarted(FContact colision) {
   FBody cuerpo1 = colision.getBody1();
   FBody cuerpo2 = colision.getBody2();
@@ -271,8 +282,45 @@ void contactStarted(FContact colision) {
   if (nombre2 == "cubierto" && nombre1 == "bola3") {
     bola.dividirCirculo((FCircle)cuerpo1);
   }
+   
+   
+   if (nombre1 == ("salto") && nombre2 == "bola1") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "salto" && nombre1 == "bola1") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
+  if (nombre1 == ("salto") && nombre2 == "bola2") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "salto" && nombre1 == "bola2") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
+  if (nombre1 == ("salto") && nombre2 == "bola3") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "salto" && nombre1 == "bola3") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
 
-
+if (nombre1 == ("normal") && nombre2 == "bola1") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "normal" && nombre1 == "bola1") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
+  if (nombre1 == ("normal") && nombre2 == "bola2") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "normal" && nombre1 == "bola2") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
+  if (nombre1 == ("normal") && nombre2 == "bola3") {
+    bola.dividirCirculo((FCircle)cuerpo2);
+  }
+  if (nombre2 == "normal" && nombre1 == "bola3") {
+    bola.dividirCirculo((FCircle)cuerpo1);
+  }
 
 
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza1")) {

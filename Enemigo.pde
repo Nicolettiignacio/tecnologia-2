@@ -280,6 +280,7 @@ FWorld mundo;
       steps[i].setFill(120, 200, 190);      //CUELLO CABEZA 3
       steps[i].setGroupIndex(-1);
       steps[i].attachImage(cuello1);
+      steps[i].setName("cuello1");
       if (i==0) {
         steps[i].setStatic(true);
         steps[i].setDrawable(true);
@@ -296,6 +297,7 @@ FWorld mundo;
       steps2[i].setFill(120, 200, 190);
       steps2[i].setGroupIndex(-1);
       steps2[i].attachImage(cuello2);
+       steps2[i].setName("cuello2");
       if (i==0) {
         steps2[i].setStatic(true);
       }
@@ -311,6 +313,7 @@ FWorld mundo;
       steps3[i].setFill(120, 200, 190);
       steps3[i].setGroupIndex(-1);
       steps3[i].attachImage(cuello3);
+       steps3[i].setName("cuello3");
       if (i==0) {
         steps3[i].setStatic(true);
       }

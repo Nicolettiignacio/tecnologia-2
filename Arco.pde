@@ -83,7 +83,7 @@ class Arco {
       FlechaMusica.play();
     }
 
-    if (tiempoDisparo==90)/*180)*/ {//5 Segundos
+    if (tiempoDisparo==90)/*90)*/ {//3 Segundos
       Taprobado=true;
       tiempoDisparo=0;
     } else {  
