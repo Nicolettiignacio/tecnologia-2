@@ -253,22 +253,22 @@ void contactStarted(FContact colision) {
   String nombre1 = bola.conseguirNombre(cuerpo1);
   String nombre2 = bola.conseguirNombre(cuerpo2);
 
-  if (nombre1 == ("normal") && nombre2 == "bola1") {
+  if (nombre1 == ("cubierto") && nombre2 == "bola1") {
     bola.dividirCirculo((FCircle)cuerpo2);
   }
-  if (nombre2 == "normal" && nombre1 == "bola1") {
+  if (nombre2 == "cubierto" && nombre1 == "bola1") {
     bola.dividirCirculo((FCircle)cuerpo1);
   }
-  if (nombre1 == ("normal") && nombre2 == "bola2") {
+  if (nombre1 == ("cubierto") && nombre2 == "bola2") {
     bola.dividirCirculo((FCircle)cuerpo2);
   }
-  if (nombre2 == "normal" && nombre1 == "bola2") {
+  if (nombre2 == "cubierto" && nombre1 == "bola2") {
     bola.dividirCirculo((FCircle)cuerpo1);
   }
-  if (nombre1 == ("normal") && nombre2 == "bola3") {
+  if (nombre1 == ("cubierto") && nombre2 == "bola3") {
     bola.dividirCirculo((FCircle)cuerpo2);
   }
-  if (nombre2 == "normal" && nombre1 == "bola3") {
+  if (nombre2 == "cubierto" && nombre1 == "bola3") {
     bola.dividirCirculo((FCircle)cuerpo1);
   }
 
