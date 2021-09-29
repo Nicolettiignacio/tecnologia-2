@@ -41,7 +41,13 @@ FWorld mundo;
   int estadoC3=1;
 
 
-
+int vidaC1=3, vidaC2=3, vidaC3=3;
+float restarVidaC1= 99;
+float restarVidaC2= 99;
+float restarVidaC3= 99;
+int MarcoVidaC1=99;
+int MarcoVidaC2=99;
+int MarcoVidaC3=99;
   Enemigo(float tam_X, float tam_Y, FWorld mundo, BolaDeFuego bola) {
 
     this.mundo = mundo;

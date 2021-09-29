@@ -19,17 +19,6 @@ BolaDeFuego bola;
 Limite limiteCabeza;
 Tuio tuio;
 
-//VIDA DE LAS CABEZAS
-int vidaC1=3, vidaC2=3, vidaC3=3;
-float restarVidaC1= 99;
-float restarVidaC2= 99;
-float restarVidaC3= 99;
-int MarcoVidaC1=99;
-int MarcoVidaC2=99;
-int MarcoVidaC3=99;
-//VIDA DE LAS CABEZAS
-
-
 int tiempoDisparar = 5000;// 5 segundos para disparar bolas de fuego
 
 float restarVidaPersonaje = 99;//VIDA DEL PERSONAJE
@@ -113,16 +102,16 @@ void draw() {
     image(inicio, 0, 0, 1200, 700);
 
 
-    vidaC1=3;
-    vidaC2=3; 
-    vidaC3=3;
+    enemigo.vidaC1=3;
+    enemigo. vidaC2=3; 
+     enemigo.vidaC3=3;
     vidaPersonaje=3;
 
     restarVidaPersonaje = 99;//vida personaje
 
-    restarVidaC1= 99;
-    restarVidaC2= 99;
-    restarVidaC3= 99;
+     enemigo.restarVidaC1= 99;
+     enemigo.restarVidaC2= 99;
+     enemigo.restarVidaC3= 99;
 
   
 
@@ -162,9 +151,9 @@ void draw() {
   if (pantalla==2) {
     image(perder, 0, 0, 1200, 700);
     
-    vidaC1=0;
-    vidaC2=0; 
-    vidaC3=0;
+     enemigo.vidaC1=0;
+     enemigo.vidaC2=0; 
+     enemigo.vidaC3=0;
   }
 
   if (pantalla==3) {
@@ -215,7 +204,7 @@ void draw() {
       pantalla=2;
     }
     //EVALUA LAS VIDAS DE LAS CABEZAS Y GANAS
-    if ((vidaC1<1)&&(vidaC2<1)&&(vidaC3<1)) {
+    if (( enemigo.vidaC1<1)&&( enemigo.vidaC2<1)&&( enemigo.vidaC3<1)) {
       pantalla=3;
     }
 
@@ -326,11 +315,11 @@ if (nombre1 == ("normal") && nombre2 == "bola1") {
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza1")) {
     FBody uno = colision.getBody1();
     FBody dos = colision.getBody2();     
-    restarVidaC1 = restarVidaC1-33;
-    vidaC1=vidaC1-1;
+     enemigo.restarVidaC1 =  enemigo.restarVidaC1-33;
+     enemigo.vidaC1= enemigo.vidaC1-1;
     mundo.remove(uno);
 
-    if (vidaC1==0) {
+    if ( enemigo.vidaC1==0) {
       mundo.remove(dos);
 
       enemigo.estadoC1 = 0;
@@ -340,11 +329,11 @@ if (nombre1 == ("normal") && nombre2 == "bola1") {
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza2")) {
     FBody uno = colision.getBody1();
     FBody dos = colision.getBody2();     
-    restarVidaC2 = restarVidaC2-33;
-    vidaC2=vidaC2-1;
+     enemigo.restarVidaC2 =  enemigo.restarVidaC2-33;
+     enemigo.vidaC2= enemigo.vidaC2-1;
     mundo.remove(uno);
 
-    if (vidaC2==0) {
+    if ( enemigo.vidaC2==0) {
       mundo.remove(dos);
 
       enemigo.estadoC2 = 0;
@@ -353,11 +342,11 @@ if (nombre1 == ("normal") && nombre2 == "bola1") {
   if (enemigo.hayColisionEntre(colision, "bala1", "enemigoCabeza3")) {
     FBody uno = colision.getBody1();
     FBody dos = colision.getBody2();   
-    restarVidaC3 = restarVidaC3-33;
-    vidaC3=vidaC3-1;
+     enemigo.restarVidaC3 =  enemigo.restarVidaC3-33;
+     enemigo.vidaC3= enemigo.vidaC3-1;
     mundo.remove(uno);
 
-    if (vidaC3==0) {
+    if ( enemigo.vidaC3==0) {
       mundo.remove(dos);
 
       enemigo.estadoC3 = 0;
@@ -373,4 +362,14 @@ if (nombre1 == ("normal") && nombre2 == "bola1") {
     restarVidaPersonaje = restarVidaPersonaje-33;
     vidaPersonaje=vidaPersonaje-1;
   }
+  
+ 
+}
+ void keyPressed() {
+  if (key==' ') {
+    a.disparar( mundo );
+  }
+  if(key=='s'){tuio.estadoPj=2;}
+  if(key=='w'){tuio.estadoPj=1;}  //BORRAR EN ENTREGA FINAL
+   if(key=='d'){tuio.estadoPj=0;}
 }
