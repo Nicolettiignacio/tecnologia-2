@@ -25,7 +25,7 @@ float restarVidaPersonaje = 99;//VIDA DEL PERSONAJE
 int vidaPersonaje=3;
 int Yvida=320;
 
-int pantalla=1;
+int pantalla=0;
 
 PImage fondo, inicio, perder, ganar;
 
